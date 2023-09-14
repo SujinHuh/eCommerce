@@ -1,5 +1,6 @@
 CREATE TABLE Member (
-                        id INT AUTO_INCREMENT PRIMARY KEY,
+                        seq INT AUTO_INCREMENT PRIMARY KEY,
+                        id  VARCHAR(255) NOT NULL,
                         name VARCHAR(255) NOT NULL,
                         email VARCHAR(255) UNIQUE NOT NULL,
                         password VARCHAR(255) NOT NULL,
@@ -13,4 +14,12 @@ CREATE TABLE Member (
 
 show databases ;
 
+select *
+from ecommerce.member;
+
+
 CREATE DATABASE ecommerce;
+
+drop table member;
+
+SELECT id FROM member WHERE id ="수진";

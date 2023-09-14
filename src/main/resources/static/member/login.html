@@ -57,15 +57,54 @@
 <div class="login-container">
     <h2>로그인</h2>
     <form action="/member/login" method="post">
-        <label for="username">사용자 이름:</label>
-        <input type="text" id="username" name="username" required>
+        <label for="id">ID:</label>
+        <input type="text" id="id" name="id" required>
 
-        <label for="password">비밀번호:</label>
+        <label for="password">PWD:</label>
         <input type="password" id="password" name="password" required>
 
-        <input type="submit" value="로그인">
+        <input type="button" id="loginBtn" value="로그인">
         <p>계정이 없으신가요? <a href="/member/join" class="register-button">회원가입</a></p>
     </form>
 </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    let dom = {
+        id : document.getElementById('id')
+        , password : document.getElementById('password')
+        , loginBtn : document.getElementById('loginBtn')
+
+    };
+
+    let login = {
+      eventBind : function () {
+          console.log('login 진입 >>> ')
+          dom.loginBtn.addEventListener('click',this.action);
+      },
+        action : () => {
+            console.log('login action 집입 >>> ')
+            //axios.post 요청
+            console.log(id);
+            axios.post('/member/login',{
+                //post값 넣기
+                id : dom.id.value
+                , pwd : dom.pwd.value
+            })
+                .then(function (res){
+                    console.log("응답 값 >>>");
+                    console.log(res);
+                    console.log("로그인 성공 >>> ");
+                    alert('로그인 성공! ');
+                })
+                .catch(function (error){
+                    console.log("로그인 에러 >>> ")
+                    console.log(error);
+                })
+        }
+    };
+
+    login.eventBind();
+
+</script>
 </html>

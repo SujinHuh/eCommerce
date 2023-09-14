@@ -19,5 +19,21 @@ public class MemberService {
         return memberMapper.create(param);
     }
 
+/**
+*
+* method : findById
+*
+* @param : id
+* @result : seq
+*
+* @author sujin
+* @version 1.0.0
+* @dtae 2023-09-14
+*
+**/
+    public Member findById(String param) {
 
+        log.info("MemberService findById 진입 >>> " + param);
+        return memberMapper.findById(param);
+    }
 }

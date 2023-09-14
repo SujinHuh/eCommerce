@@ -11,6 +11,7 @@ import java.util.Date;
 @ToString
 public class Member {
 
+    private int seq; // 자동 증가갑
     private String id; // 회원 식별자
     private String name; // 이름
     private String email; // 이메일 주소
