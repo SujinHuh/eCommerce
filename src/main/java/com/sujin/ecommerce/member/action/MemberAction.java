@@ -53,9 +53,9 @@ public class MemberAction {
     @PostMapping(value = "member/login")
     @ResponseBody public int login(@RequestBody Member member) {
         //1. 로그인 입력  id, pwd
-        log.info("Member.id, pwd " + member.getId(),member.getPassword());
+        log.info("Member.{}}", member);
         //2.(ID중복이 없다느 가정) 같은 아이디를 찾고 , pwd가 일치하는지 확인한다.
-        member = memberService.findById(member.getId(),member.getPassword());
+        member = memberService.findById(member);
 
         //3. 일치하면 로그인이 member.seq를 반환, 틀리면 로그인 다시하라고 알람.
         if(member == null){
