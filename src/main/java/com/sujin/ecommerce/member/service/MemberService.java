@@ -31,9 +31,13 @@ public class MemberService {
 * @dtae 2023-09-14
 *
 **/
-    public Member findById(String param) {
+    public Member findById(String id, String password) {
 
-        log.info("MemberService findById 진입 >>> " + param);
-        return memberMapper.findById(param);
+        log.info("MemberService findById 진입 id,password >>> " + id + password);
+
+        Member member = memberMapper.findById(id,password);
+        log.info("Member >>>>> " + member);
+
+        return member;
     }
 }

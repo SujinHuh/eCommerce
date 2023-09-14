@@ -12,7 +12,7 @@ CREATE TABLE Member (
                         emailNotifications BOOLEAN
 );
 
-show databases ;
+SHOW DATABASES;
 
 select *
 from ecommerce.member;
@@ -22,4 +22,5 @@ CREATE DATABASE ecommerce;
 
 drop table member;
 
-SELECT id FROM member WHERE id ="수진";
+
+SELECT seq,id,password FROM member WHERE id = "수진" and password = "tnwls23131231";

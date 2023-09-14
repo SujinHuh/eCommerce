@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 public class MemberAction {
 
-/**
-* MemberAction
-*
-* @author sujin
-* @version 1.0.0
-* @dtae 2023-09-14
-*
-**/
+    /**
+    * MemberAction
+    *
+    * @author sujin
+    * @version 1.0.0
+    * @dtae 2023-09-14
+    *
+    **/
     @Autowired MemberService memberService;
 
     /**
@@ -38,35 +38,36 @@ public class MemberAction {
         return "/member/login.html";
     }
 
-/**
-*
-* method : login
-*
-* @param : id,pwd
-* @result : seq
-*
-* @author sujin
-* @version 1.0.0
-* @dtae 2023-09-14
-*
-**/
+    /**
+    *
+    * method : login
+    *
+    * @param : id,pwd
+    * @result : seq
+    *
+    * @author sujin
+    * @version 1.0.0
+    * @dtae 2023-09-14
+    *
+    **/
     @PostMapping(value = "member/login")
-    @ResponseBody public int login(@RequestBody String id, String pwd) {
+    @ResponseBody public int login(@RequestBody Member member) {
         //1. 로그인 입력  id, pwd
-
+        log.info("Member.id, pwd " + member.getId(),member.getPassword());
         //2.(ID중복이 없다느 가정) 같은 아이디를 찾고 , pwd가 일치하는지 확인한다.
-        Member member = memberService.findById(id);
+        member = memberService.findById(member.getId(),member.getPassword());
 
         //3. 일치하면 로그인이 member.seq를 반환, 틀리면 로그인 다시하라고 알람.
-        if(member != null && member.getPassword().equals(pwd)){
-
-            log.info("memberAction login 진입 >>> , {}", member);
-
-            int seq = member.getSeq();
-            return seq;
-        } else {
+        if(member == null){
+            log.info("memberAction login 실패! 진입 >>> , {}", member);
             return -1;
         }
+
+        log.info("memberAction login 성공! 진입 >>> , {}", member);
+
+        int seq = member.getSeq();
+
+        return seq;
     }
 
     /**

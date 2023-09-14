@@ -89,16 +89,24 @@
             axios.post('/member/login',{
                 //post값 넣기
                 id : dom.id.value
-                , pwd : dom.pwd.value
+                , password : dom.password.value
             })
                 .then(function (res){
                     console.log("응답 값 >>>");
+                    //MemberService login error return -1
+                    if( res.data < 0 ){
+                        console.log("로그인 실패 >> "+ res);
+                        alert('로그인 실패!');
+                        return;
+                    }
+
                     console.log(res);
-                    console.log("로그인 성공 >>> ");
-                    alert('로그인 성공! ');
+                    console.log("로그인 성공 >>> " + res);
+                    alert('로그인 성공!');
+
                 })
                 .catch(function (error){
-                    console.log("로그인 에러 >>> ")
+
                     console.log(error);
                 })
         }
