@@ -79,7 +79,12 @@
         eventBind : function () {
             console.log('join')
             //1. 가입하기 버튼을 누르면 action에 이벤트를 걸어준다.
-            dom.joinBtn.addEventListener('click', this.action);
+            dom.joinBtn.addEventListener('click', () => {
+                if (validateForm()) {
+                    // 유효성 검사를 통과한 경우에만 가입 요청을 보냅니다.
+                    this.action();
+                }
+            });
         },
         action : () => {
             console.log('act')
@@ -97,20 +102,99 @@
                 , profileImage: dom.profileImage.value
             })
                 .then(function (response) {
-                    console.log("응답 값 >>> ");
-                    console.log(response);
-                    // Post 요청 성공 시, 알림 팝업을 표시합니다.
-                    alert('가입이 완료되었습니다.');
+                    console.log("응답 값 {}",response);
+                    //상태 값은 모르는 상태 값일 수 있으니 "완벽히 컨트롤 할 수 있는 상태 값만 컨트롤 하는 것"
+                    if( response.status === 200 ) {
+                        console.log("회원가입에 성공 {}",response);
+                        alert('회원가입 성공!');
+                        // 회원 가입 성공 후 페이지 이동
+                        window.location.href = '/member/login.html';
+                    } else {
+                        console.log("회원가입 실패 {}", response);
+                        alert('회원가입 실패!');
+                        return;
+                    }
+
+
                 })
                 .catch(function (error) {
-                    console.log(error);
+                    console.log("에러 값  >>>")
+                    console.log(error.response.data);
+                    alert("회원가입 에러 !!!\n " + error.response.data);
                 });
         }
     };
 
     join.eventBind();
 
+    // 사용자 정의 유효성 검사 함수
+    function validateForm() {
+        let isValid = true; // 유효성 검사 결과를 저장할 변수
 
+        // 아이디 유효성 검사
+        if (dom.id.value.trim() === "") {
+            alert('아이디를 입력하세요.');
+            return ;
+        }
+
+        // 이름 유효성 검사
+        if (dom.name.value.trim() === "") {
+            alert('이름을 입력하세요.');
+            return ;
+        }
+
+        // 이메일 유효성 검사
+        if (dom.email.value.trim() === "") {
+            alert('이메일을 입력하세요.');
+            return ;
+        }
+
+        // 비밀번호 유효성 검사
+        if (dom.password.value.trim() === "") {
+            alert('비밀번호를 입력하세요.');
+            return ;
+        }
+
+        // 전화번호 유효성 검사 (10자 또는 11자 숫자)
+        let phoneRegex = /^\d{10,11}$/;
+        if (!phoneRegex.test(dom.phoneNumber.value)) {
+            alert('유효한 전화번호를 입력하세요.');
+            return ;
+        }
+
+        // 주소 유효성 검사
+        if (dom.address.value.trim() === "") {
+            alert('주소를 입력하세요.');
+            return ;
+        }
+
+        // 성별 유효성 검사 (여성, 남성, 기타 중 하나여야 함)
+        let genderValue = dom.gender.value;
+        if (genderValue !== "male" && genderValue !== "female" && genderValue !== "other") {
+            alert('성별을 선택하세요.');
+            return ;
+        }
+
+        // 생년월일 유효성 검사 (날짜가 빈 문자열이 아니어야 하며, 과거 날짜여야 함)
+        let birthDateValue = new Date(dom.birthDate.value);
+        let currentDate = new Date();
+
+        let year = currentDate.getFullYear();
+        let month = (currentDate.getMonth() + 1).toString().padStart(2, '0'); // 월을 두 자릿수로 만듭니다.
+        let day = currentDate.getDate().toString().padStart(2, '0'); // 일을 두 자릿수로 만듭니다.
+
+        let formattedDate = `${year}-${month}-${day}`;
+        console.log(formattedDate);
+
+        if (isNaN(birthDateValue) && birthDateValue >= formattedDate) {
+            alert('유효한 생년월일을 입력하세요.');
+            return;
+        }
+
+
+
+        return isValid; // 모든 검사를 통과하면 true 반환
+    }
 
 </script>
 </html>

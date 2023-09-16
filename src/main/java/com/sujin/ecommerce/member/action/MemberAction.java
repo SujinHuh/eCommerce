@@ -2,10 +2,17 @@ package com.sujin.ecommerce.member.action;
 
 import com.sujin.ecommerce.member.service.MemberService;
 import com.sujin.ecommerce.member.vo.Member;
+import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @Controller
@@ -50,7 +57,7 @@ public class MemberAction {
     * @dtae 2023-09-14
     *
     **/
-    @PostMapping(value = "member/login")
+    @PostMapping(value = "/member/login")
     @ResponseBody public int login(@RequestBody Member member) {
         //1. 로그인 입력  id, pwd
         log.info("Member.{}}", member);
@@ -96,16 +103,34 @@ public class MemberAction {
     * @result : inNum
     *
     * @author sujin
-    * @version 1.0.0
-    * @dtae 2023-09-09
+    * @version 1.0.1
+    * @dtae 2023-09-16
     *
     **/
-    @PostMapping(value ="/member/join")
-    @ResponseBody public int join(@RequestBody Member member) {
-        log.info("memberAction join 진입 >>> , {}", member);
 
-         int idNum = memberService.create(member);
+    @PostMapping(value = "/member/join")
+    @ResponseBody
+    public ResponseEntity<String> join(@Valid @RequestBody Member member, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            // 유효성 검사 오류가 있는 경우
+            List<ObjectError> errors = bindingResult.getAllErrors();
+            StringBuilder errorMessage = new StringBuilder();
+            for (ObjectError error : errors) {
+                errorMessage.append(error.getDefaultMessage()).append("\n");
+            }
+            return new ResponseEntity<>(errorMessage.toString(), HttpStatus.BAD_REQUEST);
+        }
 
-        return idNum;
+        // id와 email중복 확인
+        Member isMember = memberService.idAndEmailCheck(member);
+        log.info("조회된 ID, Email >>>  member{}",member);
+        if(isMember != null) {
+            // 가입 진행 불가
+            return new ResponseEntity<>("사용할 수 없는 ID, Email입니다. ", HttpStatus.BAD_REQUEST);
+        }
+        // 회원가입 로직을 수행
+        int idNum = memberService.create(member);
+
+        return new ResponseEntity<>("회원 가입이 완료되었습니다. 회원 ID: " + idNum, HttpStatus.OK);
     }
 }

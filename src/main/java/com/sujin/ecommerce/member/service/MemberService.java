@@ -33,6 +33,12 @@ public class MemberService {
 **/
     public Member findById(Member member) {
 
-    return memberMapper.findById(member);
+        return memberMapper.findById(member);
     }
+
+    public Member idAndEmailCheck(Member member) {
+
+        return memberMapper.idAndEmailCheck(member);
+    }
+
 }
