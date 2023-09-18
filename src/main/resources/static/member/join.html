@@ -12,31 +12,31 @@
     <h2 class="text-center">회원 가입</h2>
     <div class="form-group">
         <label for="id">아이디</label>
-        <input type="text" class={'form-control-valid'} id="id" name="id" required>
+        <input type="text" class="form-control-valid" id="id" name="id" required>
     </div>
     <div class="form-group">
         <label for="name">이름</label>
-        <input type="text" class={'form-control-valid'} id="name" name="name" required>
+        <input type="text" class="form-control-valid" id="name" name="name" required>
     </div>
     <div class="form-group">
         <label for="email">이메일</label>
-        <input type="email" class={'form-control-valid'} id="email" name="email" required>
+        <input type="email" class="form-control-valid" id="email" name="email" required>
     </div>
     <div class="form-group">
         <label for="password">비밀번호</label>
-        <input type="password" class={'form-control-valid'} id="password" name="password" required>
+        <input type="password" class="form-control-valid" id="password" name="password" required>
     </div>
     <div class="form-group">
         <label for="phoneNumber">전화번호</label>
-        <input type="tel" class={'form-control-valid'} id="phoneNumber" name="phoneNumber">
+        <input type="tel" class="form-control-valid" id="phoneNumber" name="phoneNumber">
     </div>
     <div class="form-group">
         <label for="address">주소</label>
-        <input type="text" class={'form-control-valid'} id="address" name="address">
+        <input type="text" class="form-control-valid" id="address" name="address">
     </div>
     <div class="form-group">
         <label for="gender">성별</label>
-        <select class={'form-control-valid'} id="gender" name="gender">
+        <select class="form-control-valid" id="gender" name="gender">
             <option value="male">남성</option>
             <option value="female">여성</option>
             <option value="other">기타</option>
@@ -44,7 +44,7 @@
     </div>
     <div class="form-group">
         <label for="birthDate">생년월일</label>
-        <input type="date" class={'form-control-valid'} id="birthDate" name="birthDate">
+        <input type="date" class="form-control-valid" id="birthDate" name="birthDate">
     </div>
     <div class="form-group">
         <label for="profileImage">프로필 이미지</label>
@@ -72,7 +72,7 @@
         , gender : document.getElementById('gender')
         , birthDate : document.getElementById('birthDate')
         , profileImage : document.getElementById('profileImage')
-        , list : document.getElementById('form-control-valid')
+        , list : document.querySelectorAll('.form-control-valid')
 
     };
 
@@ -81,9 +81,13 @@
             console.log('join')
             //1. 가입하기 버튼을 누르면 action에 이벤트를 걸어준다.
             dom.joinBtn.addEventListener('click', () => {
-                if (validateForm()) {
-                    // 유효성 검사를 통과한 경우에만 가입 요청을 보냅니다.
-                    this.action();
+                for (let i = 0; i < 8; i++) {
+                    console.log(dom.list[i]);
+                    if(dom.list[i].value.trim === ''){
+                        alert(dom.list[i].id + '값이 없습니다.')
+                    }
+                        // 유효성 검사를 통과한 경우에만 가입 요청을 보냅니다.
+                        this.action();
                 }
             });
         },
