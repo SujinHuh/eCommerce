@@ -51,6 +51,7 @@
         <input type="file" class="form-control-file" id="profileImage" name="profileImage">
     </div>
     <button id="joinBtn" type="button" class="btn btn-primary">가입하기</button>
+
 </div>
 
 <!-- Bootstrap JS -->
@@ -81,25 +82,7 @@
             console.log('join');
             // 1. 가입하기 버튼을 누르면 action에 이벤트를 걸어준다.
             dom.joinBtn.addEventListener('click', () => {
-                    let firstErrorField = null; // 첫 번째 에러가 발생한 필드를 저장할 변수
-                    let errorMessage = ''; // 에러 메시지를 저장할 변수
-
-                    for (let i = 0; i < dom.list.length; i++) {
-                        console.log(dom.list[i]);
-                        if (dom.list[i].value.trim() === '') {
-                            if (firstErrorField === null) {
-                                firstErrorField = dom.list[i]; // 최초의 에러 발생 필드를 저장
-                                errorMessage = `${dom.list[i].id} 값이 없습니다.`; // 최초 에러 메시지 저장
-                            }
-                        }
-                    }
-
-                    if (errorMessage !== '' && firstErrorField !== null) {
-                        // 최초 에러 발생 필드와 에러 메시지를 알림 창에 표시
-                        alert(errorMessage);
-                        // 최초 에러 발생 필드에 포커스를 설정
-                        firstErrorField.focus();
-                    }
+                validateForm();
 
                 // 유효성 검사를 통과한 경우에만 가입 요청을 보냅니다.
                 this.action();
@@ -140,7 +123,8 @@
                     .catch(function (error) {
                         console.log("에러 값 >>  {} ", error);
                         console.log(error.response.data);
-                        // alert("회원가입 에러 !!!\n " + error.response.data);
+                        // showAlertAndFocus 함수를 사용하여 에러 메시지를 표시하고 포커스 설정
+                        //showAlertAndFocus(dom.joinBtn, '회원가입 에러 !!!\n ' + error.response.data);
                     });
             }
         };
@@ -167,11 +151,33 @@
     }
 
 
+    // 에러 메시지를 표시하고 포커스를 설정하는 함수
+    function showAlertAndFocus(element, message) {
+        alert(message);
+        element.focus();
+    }
+    function validateForm(){
+        let firstErrorField = null; // 첫 번째 에러가 발생한 필드를 저장할 변수
+        let errorMessage = ''; // 에러 메시지를 저장할 변수
 
+        for (let i = 0; i < dom.list.length; i++) {
+            console.log(dom.list[i]);
+            if (dom.list[i].value.trim() === '') {
+                if (firstErrorField === null) {
+                    firstErrorField = dom.list[i]; // 최초의 에러 발생 필드를 저장
+                    errorMessage = `${dom.list[i].id} 값이 없습니다.`; // 최초 에러 메시지 저장
+                }
+            }
+        }
 
+        if (errorMessage !== '' && firstErrorField !== null) {
+            // 최초 에러 발생 필드와 에러 메시지를 알림 창에 표시
+            showAlertAndFocus(firstErrorField, errorMessage);
+        }
+    }
 
     // 사용자 정의 유효성 검사 함수
-    function validateForm() {
+    function validateForm1() {
         let isValid = true; // 유효성 검사 결과를 저장할 변수
 
         // 아이디 유효성 검사
