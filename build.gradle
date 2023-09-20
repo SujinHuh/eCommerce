@@ -40,6 +40,9 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	annotationProcessor 'org.projectlombok:lombok'
 
+	//spring Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
 	// Gradle
 	testImplementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter-test:3.0.2'
 }
