@@ -1,14 +1,14 @@
 package com.sujin.ecommerce.member.vo;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.Past;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 import org.hibernate.validator.constraints.Email;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 @Getter
@@ -48,5 +48,8 @@ public class Member {
 
     private String profileImage; // 프로필 이미지 URL
     private boolean emailNotifications; // 이메일 알림 설정 (광고동의)
+
+    private String role;
+
 
 }

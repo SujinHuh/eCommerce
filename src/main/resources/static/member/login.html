@@ -86,11 +86,7 @@
             console.log('login action 집입 >>> ')
             //axios.post 요청
             console.log(id);
-            axios.post('/member/login',{
-                //post값 넣기
-                id : dom.id.value
-                , password : dom.password.value
-            })
+            axios.post(`/member/login`,`id=${dom.id.value}&password=${dom.password.value}`)
                 .then(function (res){
                     console.log("응답 값 >>>");
                     //MemberService login error return -1

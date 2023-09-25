@@ -31,4 +31,8 @@ public interface MemberMapper {
 
     @Select("SELECT id,email FROM member WHERE id = #{id} or email = #{email}")
     Member idAndEmailCheck(Member member);
+
+
+    @Select("SELECT id,email,name,password,role from Member where id = #{id} ")
+    Member getId(String id);
 }

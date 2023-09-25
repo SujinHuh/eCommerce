@@ -9,13 +9,17 @@ CREATE TABLE Member (
                         gender VARCHAR(10), -- Changed data type to VARCHAR for gender
                         birthDate VARCHAR(20),
                         profileImage VARCHAR(255),
-                        emailNotifications BOOLEAN
+                        emailNotifications BOOLEAN,
+                        role        VARCHAR(20) default '01'
 );
+
+
 
 SHOW DATABASES;
 
 CREATE DATABASE ecommerce;
 
+Select * from Member where email = "sujin941220@gmail.com";
 
 select *
 from ecommerce.member;
@@ -26,6 +30,6 @@ drop table member;
 SELECT seq,id,password FROM member WHERE id = "수진" and password = "tnwls23131231";
 update
 delete
-inmsert commit
+insert commit
 
 trasnac

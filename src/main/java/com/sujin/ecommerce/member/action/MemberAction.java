@@ -2,16 +2,18 @@ package com.sujin.ecommerce.member.action;
 
 import com.sujin.ecommerce.member.service.MemberService;
 import com.sujin.ecommerce.member.vo.Member;
-import jakarta.validation.Valid;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Slf4j
@@ -27,6 +29,7 @@ public class MemberAction {
     *
     **/
     @Autowired MemberService memberService;
+    @Autowired PasswordEncoder passwordEncoder;
 
     /**
     *
@@ -128,6 +131,9 @@ public class MemberAction {
             // 가입 진행 불가
             return new ResponseEntity<>("사용할 수 없는 ID, Email입니다. ", HttpStatus.BAD_REQUEST);
         }
+
+        // 비밀번호 암호화
+        member.setPassword(passwordEncoder.encode(member.getPassword()));
         // 회원가입 로직을 수행
         int idNum = memberService.create(member);
 

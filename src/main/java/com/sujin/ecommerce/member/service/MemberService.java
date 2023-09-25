@@ -41,4 +41,7 @@ public class MemberService {
         return memberMapper.idAndEmailCheck(member);
     }
 
+    public Member getId(String id) {
+        return memberMapper.getId(id);
+    }
 }
