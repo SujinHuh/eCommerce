@@ -69,6 +69,7 @@
 </div>
 </body>
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src="/js/restApi.js"></script>
 <script>
     let dom = {
         id : document.getElementById('id')
@@ -86,20 +87,26 @@
             console.log('login action 집입 >>> ')
             //axios.post 요청
             console.log(id);
-            axios.post(`/member/login`,`id=${dom.id.value}&password=${dom.password.value}`)
+            console.log(test);
+            console.log(restApi);
+            restApi.post(`/member/login`,`id=${dom.id.value}&password=${dom.password.value}`)
                 .then(function (res){
                     console.log("응답 값 >>>");
                     //MemberService login error return -1
                     if( res.data < 0 ){
-                        console.log("로그인 실패 >> "+ res);
+                        console.log("로그인 실패 >> ", res);
                         alert('로그인 실패!');
                         return;
                     }
 
                     console.log(res);
-                    console.log("로그인 성공 >>> " + res);
+                    console.log("로그인 성공 >>> ", res);
+                    // 로그인 성공 후 확인 버튼 클릭 시 인덱스 페이지로 이동
                     alert('로그인 성공!');
-
+                    location.href = '/index'; // 인덱스 페이지 이동
+                    let token = res.data.token;
+                    // JWT 토큰을 쿠키에 저장
+                    setCookie("jwt_token", token, 7); // 7일 동안 쿠키 유지
                 })
                 .catch(function (error){
 

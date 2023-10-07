@@ -27,7 +27,6 @@ public class AuthTokenFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        log.info("doFilterInternal id >> {},password >> {}", request.getParameter("id"), request.getParameter("password"));
         try {
             String jwt = parseJwt(request);
             log.info("jwt >>> {}",jwt);

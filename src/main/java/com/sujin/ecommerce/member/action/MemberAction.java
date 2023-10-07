@@ -136,7 +136,12 @@ public class MemberAction {
         member.setPassword(passwordEncoder.encode(member.getPassword()));
         // 회원가입 로직을 수행
         int idNum = memberService.create(member);
+        if(idNum == 1){
+            return new ResponseEntity<>("회원 가입이 완료되었습니다. 회원 ID: " + member.getId(), HttpStatus.OK);
 
-        return new ResponseEntity<>("회원 가입이 완료되었습니다. 회원 ID: " + idNum, HttpStatus.OK);
+        }else{
+            return new ResponseEntity<>("회원 가입이 실패", HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
     }
 }
