@@ -21,10 +21,15 @@ export default function Join() {
             , profileImage: dom.profileImage.value
         })
             .then((res) => {
-                    console.log(res);
-                    alert(res.data.msg);
+                    console.log("res >> ",res);
                     if (res.status === 200) {
-                        //console.log("회원가입 성공 {}" )
+                        console.log("회원가입 성공 {}", res);
+                        alert('회원 가입 성공');
+                        // index 페이지로 이동 .
+                    } else {
+                        console.log("회원가입 실패 {}", res.data.msg);
+                        alert('회원 가입  실패');
+                        return;
                     }
             });
     }
